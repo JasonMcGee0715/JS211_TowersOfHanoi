@@ -30,27 +30,65 @@ const printStacks = () => {
 }
 
 // Next, what do you think this function should do?
-const movePiece = () => {
-  // Your code here
+const movePiece = (startStack, endStack) => {
+  return stacks[endStack].push(stacks[startStack].pop());
+  
+}
 
+const stackTest = (startStack, endStack)=> {
+  if (startStack === "a" && (endStack === "b" || endStack === "c")) {
+    return true;
+  } 
+  else if (startStack === "b" && (endStack === "a" || endStack === "c")) {
+    return true;
+  }
+  else if (startStack === "c" && (endStack === "a" || endStack === "b")) {
+    return true;  
+  }
+  else {
+    return false;
+  }
 }
 
 // Before you move, should you check if the move it actually allowed? Should 3 be able to be stacked on 2
-const isLegal = () => {
-  // Your code here
-
+const isLegal = (startStack, endStack) => {
+  if (stackTest(startStack, endStack)) {
+  let start = stacks[startStack][stacks[startStack].length -1];
+  let end = stacks[endStack][stacks[endStack].length -1];
+  // let moveFrom = stacks[startStack];
+  // let moveTo = stacks[endStack];
+  // if (moveFrom[stacks[startStack].length -1] < moveTo[stacks[endStack].length -1]) {
+    if (start < end || stacks[endStack].length === 0) {
+      return true;
+    }
+    else {
+      console.log("Illegal Input!")
+      return false
+  }
+}
 }
 
 // What is a win in Towers of Hanoi? When should this function run?
 const checkForWin = () => {
-  // Your code here
+  if (stacks.b.length === 4) {
+    console.log("Congrats, you win!");
+    return true;
+  }
+  else {
+    return false;
+  }
 
 }
 
 // When is this function called? What should it do with its argument?
 const towersOfHanoi = (startStack, endStack) => {
-  // Your code here
-
+  if (isLegal(startStack, endStack)) {
+    movePiece(startStack, endStack);
+    checkForWin();
+  }
+  // else {
+  //   towersOfHanoi()
+  // }
 }
 
 const getPrompt = () => {
@@ -72,6 +110,16 @@ if (typeof describe === 'function') {
       towersOfHanoi('a', 'b');
       assert.deepEqual(stacks, { a: [4, 3, 2], b: [1], c: [] });
     });
+  });
+  describe('#stackTest()', () => {
+    it('should only allow illegal input', () => {
+      towersOfHanoi('a', 'd');
+      assert.equal(stackTest('a', 'd'), false);
+        });
+    it('should only allow legal input', () => {
+      towersOfHanoi('b', 'c');
+      assert.equal(stackTest('b', 'c'), true);
+        });
   });
 
   describe('#isLegal()', () => {
