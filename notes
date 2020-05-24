@@ -1,4 +1,4 @@
-Towers of Hanoi
+Towers of Hanoi plan
 
 Move a piece-
     pop from one column to another
@@ -16,5 +16,9 @@ check for win-
     matches, then you win and a alert pops up notifying user.  If not, then it allows next move.
 
 Towers of Hanoi- 
-    ?????
+    main function that iterates throught the other functions
+        legal move
+        move a piece
+        check for win
+        if no win then allow another move
 
